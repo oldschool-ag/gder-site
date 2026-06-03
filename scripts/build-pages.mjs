@@ -9,8 +9,13 @@ vm.createContext(context);
 vm.runInContext(entitiesSource, context);
 
 const baseEntities = Array.isArray(context.window.GDER_ENTITIES) ? context.window.GDER_ENTITIES : [];
-const normalizedPath = '/home/node/.openclaw/repos/scr-registry/data/dao-candidates/dao-candidates-v0.normalized.json';
-const normalizedRecords = fs.existsSync(normalizedPath)
+const normalizedPathCandidates = [
+  process.env.GDER_NORMALIZED_PATH,
+  path.resolve(root, '..', 'scr-registry', 'data/dao-candidates/dao-candidates-v0.normalized.json'),
+  '/home/node/.openclaw/repos/scr-registry/data/dao-candidates/dao-candidates-v0.normalized.json'
+].filter(Boolean);
+const normalizedPath = normalizedPathCandidates.find((candidate) => fs.existsSync(candidate));
+const normalizedRecords = normalizedPath
   ? JSON.parse(fs.readFileSync(normalizedPath, 'utf8'))
   : [];
 
@@ -123,6 +128,135 @@ function renderConfidence(confidence) {
         ${renderField('Score', confidence.score)}
         ${renderField('Rationale', confidence.rationale)}
       </div>
+    </section>
+  `;
+}
+
+function renderReferenceCard(reference) {
+  if (!hasValue(reference)) return '';
+
+  const fields = [
+    renderField('Label', reference.label),
+    renderField('Network', reference.network),
+    renderField('Address', reference.address),
+    renderField(
+      'Treasury control',
+      hasValue(reference.custody_type) ? titleCaseFromKey(reference.custody_type) : null
+    ),
+    renderField('Threshold', reference.threshold),
+  ]
+    .filter(Boolean)
+    .join('');
+
+  const controllerBlock = Array.isArray(reference.controlling_addresses) && reference.controlling_addresses.length
+    ? `
+      <div class="entity-subsection">
+        <p class="entity-subtitle">Controlling addresses</p>
+        <div class="entity-reference-list">
+          ${reference.controlling_addresses
+            .map((addressRef) => {
+              const addressFields = [
+                renderField('Label', addressRef.label),
+                renderField('Network', addressRef.network),
+                renderField('Address', addressRef.address),
+              ]
+                .filter(Boolean)
+                .join('');
+              const addressLink = hasValue(addressRef.url)
+                ? `<div class="entity-reference-links"><a class="button button-secondary button-compact" href="${escapeHtml(addressRef.url)}" target="_blank" rel="noreferrer">Open link</a></div>`
+                : '';
+              return `
+                <article class="entity-reference-card entity-reference-card-nested">
+                  <div class="entity-grid">${addressFields}</div>
+                  ${addressLink}
+                </article>
+              `;
+            })
+            .join('')}
+        </div>
+      </div>
+    `
+    : '';
+
+  const noteBlock = Array.isArray(reference.notes) && reference.notes.length
+    ? reference.notes.map((note) => `<p class="entity-note">${escapeHtml(note)}</p>`).join('')
+    : '';
+
+  const links = [];
+  if (hasValue(reference.url)) {
+    links.push(
+      `<a class="button button-secondary button-compact" href="${escapeHtml(reference.url)}" target="_blank" rel="noreferrer">Open link</a>`
+    );
+  }
+  if (hasValue(reference.source_url) && reference.source_url !== reference.url) {
+    links.push(
+      `<a class="button button-secondary button-compact" href="${escapeHtml(reference.source_url)}" target="_blank" rel="noreferrer">${escapeHtml(reference.source_label || 'Source')}</a>`
+    );
+  } else if (hasValue(reference.source_url) && reference.source_url === reference.url && hasValue(reference.source_label)) {
+    links.splice(
+      0,
+      links.length,
+      `<a class="button button-secondary button-compact" href="${escapeHtml(reference.url)}" target="_blank" rel="noreferrer">${escapeHtml(reference.source_label)}</a>`
+    );
+  }
+
+  return `
+    <article class="entity-reference-card">
+      <div class="entity-grid">${fields}</div>
+      ${controllerBlock}
+      ${noteBlock}
+      ${links.length ? `<div class="entity-reference-links">${links.join('')}</div>` : ''}
+    </article>
+  `;
+}
+
+function renderOnchainReferences(onchainReferences) {
+  if (!hasValue(onchainReferences)) return '';
+
+  const tokenRefs = Array.isArray(onchainReferences.token_refs)
+    ? onchainReferences.token_refs.filter(hasValue)
+    : [];
+  const treasuryRefs = Array.isArray(onchainReferences.treasury_refs)
+    ? onchainReferences.treasury_refs.filter(hasValue)
+    : [];
+  const notes = Array.isArray(onchainReferences.notes) ? onchainReferences.notes.filter(hasValue) : [];
+
+  const tokenSection = tokenRefs.length
+    ? `
+      <div class="entity-subsection">
+        <p class="entity-subtitle">Token references</p>
+        <div class="entity-reference-list">${tokenRefs.map(renderReferenceCard).join('')}</div>
+      </div>
+    `
+    : '';
+
+  const treasurySection = treasuryRefs.length
+    ? `
+      <div class="entity-subsection">
+        <p class="entity-subtitle">Treasury references</p>
+        <div class="entity-reference-list">${treasuryRefs.map(renderReferenceCard).join('')}</div>
+      </div>
+    `
+    : '';
+
+  const notesSection = notes.length
+    ? `
+      <div class="entity-subsection">
+        <p class="entity-subtitle">Notes</p>
+        ${notes.map((note) => `<p class="entity-note">${escapeHtml(note)}</p>`).join('')}
+      </div>
+    `
+    : '';
+
+  if (!tokenSection && !treasurySection && !notesSection) return '';
+
+  return `
+    <section class="entity-section">
+      <h3>Onchain references</h3>
+      <p class="entity-note">These links are convenience references for public inspection. Treasury control notes are shown only where the public evidence was strong enough to support the claim.</p>
+      ${tokenSection}
+      ${treasurySection}
+      ${notesSection}
     </section>
   `;
 }
@@ -275,6 +409,7 @@ function mergeEntity(baseEntity) {
             'admission_signals',
             'governance_anchor',
             'treasury_anchor',
+            'onchain_references',
             'canonical_url',
             'source_urls',
             'official_source_urls',
@@ -317,6 +452,7 @@ function mergeEntity(baseEntity) {
           }
         : null),
     treasuryAnchor: normalized?.treasury_anchor || null,
+    onchainReferences: normalized?.onchain_references || null,
     canonicalUrl: normalized?.canonical_url || baseEntity.canonicalUrl || null,
     sourceUrls: normalized?.source_urls || (baseEntity.canonicalUrl ? [baseEntity.canonicalUrl] : []),
     officialSourceUrls: normalized?.official_source_urls || [],
@@ -350,6 +486,27 @@ function entityPage(entity) {
     renderField('Status', hasValue(entity.status) ? titleCaseFromKey(entity.status) : null),
     renderField('Parent entity', entity.parentEntity),
     renderField('DAO candidate flag', entity.daoCandidateFlag),
+  ]
+    .filter(Boolean)
+    .join('');
+
+  const primaryTokenReference = Array.isArray(entity.onchainReferences?.token_refs)
+    ? entity.onchainReferences.token_refs.find(hasValue) || null
+    : null;
+  const primaryTreasuryReference = Array.isArray(entity.onchainReferences?.treasury_refs)
+    ? entity.onchainReferences.treasury_refs.find(hasValue) || null
+    : null;
+  const actionButtons = [
+    `<a class="button button-primary" href="/newlisting/?mode=edit&entity=${entity.slug}">Edit entry</a>`,
+    hasValue(entity.canonicalUrl)
+      ? `<a class="button button-secondary" href="${escapeHtml(entity.canonicalUrl)}" target="_blank" rel="noreferrer">Official source</a>`
+      : '',
+    hasValue(primaryTokenReference?.url)
+      ? `<a class="button button-secondary" href="${escapeHtml(primaryTokenReference.url)}" target="_blank" rel="noreferrer">Token</a>`
+      : '',
+    hasValue(primaryTreasuryReference?.url)
+      ? `<a class="button button-secondary" href="${escapeHtml(primaryTreasuryReference.url)}" target="_blank" rel="noreferrer">Treasury</a>`
+      : ''
   ]
     .filter(Boolean)
     .join('');
@@ -442,10 +599,7 @@ function entityPage(entity) {
             <p class="eyebrow">Entry</p>
             <h2>${escapeHtml(entity.displayName)}</h2>
           </div>
-          <div class="entity-actions">
-            <a class="button button-primary" href="/newlisting/?mode=edit&entity=${entity.slug}">Edit entry</a>
-            ${hasValue(entity.canonicalUrl) ? `<a class="button button-secondary" href="${escapeHtml(entity.canonicalUrl)}" target="_blank" rel="noreferrer">Official source</a>` : ''}
-          </div>
+          <div class="entity-actions">${actionButtons}</div>
         </div>
 
         <div class="entity-grid">${overviewFields}</div>
@@ -454,6 +608,7 @@ function entityPage(entity) {
         ${admissionSection}
         ${renderAnchorSection('Governance anchor', entity.governanceAnchor)}
         ${renderAnchorSection('Treasury or control anchor', entity.treasuryAnchor)}
+        ${renderOnchainReferences(entity.onchainReferences)}
         ${renderConfidence(entity.confidence)}
         ${canonicalUrlSection}
         ${sourceSection}
