@@ -5,14 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#12151d" />
     <meta name="robots" content="index,follow" />
-    <meta name="description" content="Full list of current GDER entries." />
-    <title>Full list — GDER</title>
+    <meta name="description" content="Public research-set entries in GDER." />
+    <title>Research set — GDER</title>
     <link rel="canonical" href="https://gder.net/full-list/" />
     <link rel="icon" href="/assets/favicon.ico" sizes="any" />
     <link rel="icon" type="image/svg+xml" href="/assets/gder-mark.svg" />
     <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
     <link rel="stylesheet" href="/styles.css" />
+    
     <script src="/entities.js" defer></script>
     <script src="/script.js" defer></script>
   </head>
@@ -24,247 +25,605 @@
         </a>
 
         <nav class="site-nav" aria-label="Primary">
-          <a href="/">Home</a>
-          <a href="/full-list/">Show all entities</a>
-          <a class="button button-primary button-compact" href="/newlisting/">Request listing</a>
+          <a href="/full-list/">Research set</a>
+          <a href="/#method">Method</a>
+          <a class="button button-primary button-compact" href="/newlisting/">Request review</a>
         </nav>
       </header>
 
       <main>
         
       <section class="page-card">
-        <p class="eyebrow">Full list</p>
-        <h1>A public record system for governed digital entities.</h1>
-        <p class="page-copy">Full list of current entities.</p>
+        <p class="eyebrow">Research set</p>
+        <h1>Public research-set entries in GDER.</h1>
+        <p class="page-copy">For counterparties and researchers, this page is the inspection surface for current public research-set entries. For representatives, find the entity first, then request a reviewed record or submit updated evidence from its page.</p>
+        <div class="page-actions">
+          <a class="button button-primary" href="/newlisting/">Representative intake</a>
+          <a class="button button-secondary" href="/">Back to home</a>
+        </div>
+      </section>
+
+      <section class="boundary-band">
+        <p>Research-set entries are not the same as reviewed records. This page is a public research surface only. Reviewed records and portable extracts appear only after structured review.</p>
+      </section>
+
+      <section class="page-card list-controls-card">
+        <div class="list-controls-head">
+          <div>
+            <p class="eyebrow">Find an entry</p>
+            <h2>Search and filter the current research set.</h2>
+            <p class="section-copy">Use search, wrapper, jurisdiction, and sort controls to inspect the current public set without conflating it with reviewed records.</p>
+          </div>
+          <p class="list-results-summary" data-list-results aria-live="polite"></p>
+        </div>
+
+        <form class="list-controls" data-list-controls>
+          <div class="form-field">
+            <label class="field-label" for="listSearch">Search</label>
+            <input id="listSearch" class="field-input" type="search" placeholder="Search by entity or legal name" data-list-search />
+          </div>
+          <div class="form-field">
+            <label class="field-label" for="listWrapper">Wrapper</label>
+            <select id="listWrapper" class="field-select" data-list-wrapper>
+              <option value="">All wrappers</option>
+              <option value="501(c)(4) nonprofit">501(c)(4) nonprofit</option><option value="501(c)(6) nonprofit">501(c)(6) nonprofit</option><option value="DAO LLC">DAO LLC</option><option value="Delaware LLC">Delaware LLC</option><option value="foundation">foundation</option><option value="foundation company">foundation company</option><option value="foundation company limited by guarantee">foundation company limited by guarantee</option><option value="independent non-profit">independent non-profit</option><option value="LLC">LLC</option><option value="member-managed Delaware LLC">member-managed Delaware LLC</option><option value="mission-driven foundation">mission-driven foundation</option><option value="nonprofit association">nonprofit association</option><option value="not-for-profit">not-for-profit</option><option value="Stiftung">Stiftung</option><option value="Stiftung / public benefit foundation">Stiftung / public benefit foundation</option><option value="Swiss foundation">Swiss foundation</option><option value="Swiss nonprofit foundation">Swiss nonprofit foundation</option><option value="Swiss not-for-profit foundation">Swiss not-for-profit foundation</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label class="field-label" for="listJurisdiction">Jurisdiction</label>
+            <select id="listJurisdiction" class="field-select" data-list-jurisdiction>
+              <option value="">All jurisdictions</option>
+              <option value="Austria">Austria</option><option value="Cayman Islands">Cayman Islands</option><option value="Delaware, United States">Delaware, United States</option><option value="Jurisdiction pending">Jurisdiction pending</option><option value="Republic of Marshall Islands">Republic of Marshall Islands</option><option value="Switzerland">Switzerland</option><option value="United States">United States</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label class="field-label" for="listSort">Sort</label>
+            <select id="listSort" class="field-select" data-list-sort>
+              <option value="az">Name A–Z</option>
+              <option value="za">Name Z–A</option>
+            </select>
+          </div>
+        </form>
+
+        <div class="list-controls-actions">
+          <button class="button button-secondary button-compact" type="button" data-list-reset>Clear filters</button>
+        </div>
       </section>
 
       <section class="list-shell">
-        
-        <a class="list-row" href="/1inch-foundation/">
-          <div>
+        <p class="list-helper">Current public research-set entries. Each row links to a research-only entity page.</p>
+        <div class="list-rows" data-list-rows>
+          
+        <a
+          class="list-row"
+          href="/1inch-foundation/"
+          data-list-row
+          data-name="1inch Foundation"
+          data-legal-name="1inch Foundation"
+          data-wrapper="independent non-profit"
+          data-jurisdiction="Jurisdiction pending"
+        >
+          <div class="list-row-copy">
             <span class="entity-status">Research set</span>
             <span class="list-name">1inch Foundation</span>
-            <p class="list-meta">independent non-profit · Jurisdiction pending</p>
+            <p class="list-meta">Current public research-set entry for counterparty inspection. Not a reviewed record.</p>
+            <div class="list-meta-tags">
+              <span class="list-tag"><strong>Wrapper</strong>independent non-profit</span>
+              <span class="list-tag"><strong>Jurisdiction</strong>Jurisdiction pending</span>
+            </div>
           </div>
-          <span class="list-row-action">Open</span>
+          <span class="list-row-action">Inspect</span>
         </a>
       
-        <a class="list-row" href="/aleph-zero-foundation/">
-          <div>
+        <a
+          class="list-row"
+          href="/aleph-zero-foundation/"
+          data-list-row
+          data-name="Aleph Zero Foundation"
+          data-legal-name="Aleph Zero Stiftung"
+          data-wrapper="Stiftung"
+          data-jurisdiction="Switzerland"
+        >
+          <div class="list-row-copy">
             <span class="entity-status">Research set</span>
             <span class="list-name">Aleph Zero Foundation</span>
-            <p class="list-meta">Stiftung · Switzerland</p>
+            <p class="list-meta">Current public research-set entry for counterparty inspection. Not a reviewed record.</p>
+            <div class="list-meta-tags">
+              <span class="list-tag"><strong>Wrapper</strong>Stiftung</span>
+              <span class="list-tag"><strong>Jurisdiction</strong>Switzerland</span>
+            </div>
           </div>
-          <span class="list-row-action">Open</span>
+          <span class="list-row-action">Inspect</span>
         </a>
       
-        <a class="list-row" href="/ape-foundation/">
-          <div>
+        <a
+          class="list-row"
+          href="/ape-foundation/"
+          data-list-row
+          data-name="Ape Foundation"
+          data-legal-name="Ape Foundation"
+          data-wrapper="foundation"
+          data-jurisdiction="Cayman Islands"
+        >
+          <div class="list-row-copy">
             <span class="entity-status">Research set</span>
             <span class="list-name">Ape Foundation</span>
-            <p class="list-meta">foundation · Cayman Islands</p>
+            <p class="list-meta">Current public research-set entry for counterparty inspection. Not a reviewed record.</p>
+            <div class="list-meta-tags">
+              <span class="list-tag"><strong>Wrapper</strong>foundation</span>
+              <span class="list-tag"><strong>Jurisdiction</strong>Cayman Islands</span>
+            </div>
           </div>
-          <span class="list-row-action">Open</span>
+          <span class="list-row-action">Inspect</span>
         </a>
       
-        <a class="list-row" href="/arbitrum-foundation/">
-          <div>
+        <a
+          class="list-row"
+          href="/arbitrum-foundation/"
+          data-list-row
+          data-name="Arbitrum Foundation"
+          data-legal-name="The Arbitrum Foundation"
+          data-wrapper="foundation company"
+          data-jurisdiction="Cayman Islands"
+        >
+          <div class="list-row-copy">
             <span class="entity-status">Research set</span>
             <span class="list-name">Arbitrum Foundation</span>
-            <p class="list-meta">foundation company · Cayman Islands</p>
+            <p class="list-meta">Current public research-set entry for counterparty inspection. Not a reviewed record.</p>
+            <div class="list-meta-tags">
+              <span class="list-tag"><strong>Wrapper</strong>foundation company</span>
+              <span class="list-tag"><strong>Jurisdiction</strong>Cayman Islands</span>
+            </div>
           </div>
-          <span class="list-row-action">Open</span>
+          <span class="list-row-action">Inspect</span>
         </a>
       
-        <a class="list-row" href="/balancer-foundation/">
-          <div>
+        <a
+          class="list-row"
+          href="/balancer-foundation/"
+          data-list-row
+          data-name="Balancer Foundation"
+          data-legal-name="Balancer Foundation"
+          data-wrapper="foundation"
+          data-jurisdiction="Cayman Islands"
+        >
+          <div class="list-row-copy">
             <span class="entity-status">Research set</span>
             <span class="list-name">Balancer Foundation</span>
-            <p class="list-meta">foundation · Cayman Islands</p>
+            <p class="list-meta">Current public research-set entry for counterparty inspection. Not a reviewed record.</p>
+            <div class="list-meta-tags">
+              <span class="list-tag"><strong>Wrapper</strong>foundation</span>
+              <span class="list-tag"><strong>Jurisdiction</strong>Cayman Islands</span>
+            </div>
           </div>
-          <span class="list-row-action">Open</span>
+          <span class="list-row-action">Inspect</span>
         </a>
       
-        <a class="list-row" href="/cardano-foundation/">
-          <div>
+        <a
+          class="list-row"
+          href="/cardano-foundation/"
+          data-list-row
+          data-name="Cardano Foundation"
+          data-legal-name="Cardano Foundation"
+          data-wrapper="Swiss not-for-profit foundation"
+          data-jurisdiction="Switzerland"
+        >
+          <div class="list-row-copy">
             <span class="entity-status">Research set</span>
             <span class="list-name">Cardano Foundation</span>
-            <p class="list-meta">Swiss not-for-profit foundation · Switzerland</p>
+            <p class="list-meta">Current public research-set entry for counterparty inspection. Not a reviewed record.</p>
+            <div class="list-meta-tags">
+              <span class="list-tag"><strong>Wrapper</strong>Swiss not-for-profit foundation</span>
+              <span class="list-tag"><strong>Jurisdiction</strong>Switzerland</span>
+            </div>
           </div>
-          <span class="list-row-action">Open</span>
+          <span class="list-row-action">Inspect</span>
         </a>
       
-        <a class="list-row" href="/celo-foundation/">
-          <div>
+        <a
+          class="list-row"
+          href="/celo-foundation/"
+          data-list-row
+          data-name="Celo Foundation"
+          data-legal-name="Celo Foundation"
+          data-wrapper="mission-driven foundation"
+          data-jurisdiction="Delaware, United States"
+        >
+          <div class="list-row-copy">
             <span class="entity-status">Research set</span>
             <span class="list-name">Celo Foundation</span>
-            <p class="list-meta">mission-driven foundation · Delaware, United States</p>
+            <p class="list-meta">Current public research-set entry for counterparty inspection. Not a reviewed record.</p>
+            <div class="list-meta-tags">
+              <span class="list-tag"><strong>Wrapper</strong>mission-driven foundation</span>
+              <span class="list-tag"><strong>Jurisdiction</strong>Delaware, United States</span>
+            </div>
           </div>
-          <span class="list-row-action">Open</span>
+          <span class="list-row-action">Inspect</span>
         </a>
       
-        <a class="list-row" href="/ens-foundation/">
-          <div>
+        <a
+          class="list-row"
+          href="/ens-foundation/"
+          data-list-row
+          data-name="ENS Foundation"
+          data-legal-name="ENS Foundation Limited"
+          data-wrapper="foundation company limited by guarantee"
+          data-jurisdiction="Cayman Islands"
+        >
+          <div class="list-row-copy">
             <span class="entity-status">Research set</span>
             <span class="list-name">ENS Foundation</span>
-            <p class="list-meta">foundation company limited by guarantee · Cayman Islands</p>
+            <p class="list-meta">Current public research-set entry for counterparty inspection. Not a reviewed record.</p>
+            <div class="list-meta-tags">
+              <span class="list-tag"><strong>Wrapper</strong>foundation company limited by guarantee</span>
+              <span class="list-tag"><strong>Jurisdiction</strong>Cayman Islands</span>
+            </div>
           </div>
-          <span class="list-row-action">Open</span>
+          <span class="list-row-action">Inspect</span>
         </a>
       
-        <a class="list-row" href="/flamingo-dao/">
-          <div>
+        <a
+          class="list-row"
+          href="/flamingo-dao/"
+          data-list-row
+          data-name="Flamingo DAO"
+          data-legal-name="Flamingo DAO LLC"
+          data-wrapper="LLC"
+          data-jurisdiction="United States"
+        >
+          <div class="list-row-copy">
             <span class="entity-status">Research set</span>
             <span class="list-name">Flamingo DAO</span>
-            <p class="list-meta">LLC · United States</p>
+            <p class="list-meta">Current public research-set entry for counterparty inspection. Not a reviewed record.</p>
+            <div class="list-meta-tags">
+              <span class="list-tag"><strong>Wrapper</strong>LLC</span>
+              <span class="list-tag"><strong>Jurisdiction</strong>United States</span>
+            </div>
           </div>
-          <span class="list-row-action">Open</span>
+          <span class="list-row-action">Inspect</span>
         </a>
       
-        <a class="list-row" href="/helium-foundation/">
-          <div>
+        <a
+          class="list-row"
+          href="/helium-foundation/"
+          data-list-row
+          data-name="Helium Foundation"
+          data-legal-name="Decentralized Wireless Foundation Inc."
+          data-wrapper="501(c)(6) nonprofit"
+          data-jurisdiction="United States"
+        >
+          <div class="list-row-copy">
             <span class="entity-status">Research set</span>
             <span class="list-name">Helium Foundation</span>
-            <p class="list-meta">501(c)(6) nonprofit · United States</p>
+            <p class="list-meta">Current public research-set entry for counterparty inspection. Not a reviewed record.</p>
+            <div class="list-meta-tags">
+              <span class="list-tag"><strong>Wrapper</strong>501(c)(6) nonprofit</span>
+              <span class="list-tag"><strong>Jurisdiction</strong>United States</span>
+            </div>
           </div>
-          <span class="list-row-action">Open</span>
+          <span class="list-row-action">Inspect</span>
         </a>
       
-        <a class="list-row" href="/interchain-foundation/">
-          <div>
+        <a
+          class="list-row"
+          href="/interchain-foundation/"
+          data-list-row
+          data-name="Interchain Foundation"
+          data-legal-name="Interchain Foundation"
+          data-wrapper="Swiss nonprofit foundation"
+          data-jurisdiction="Switzerland"
+        >
+          <div class="list-row-copy">
             <span class="entity-status">Research set</span>
             <span class="list-name">Interchain Foundation</span>
-            <p class="list-meta">Swiss nonprofit foundation · Switzerland</p>
+            <p class="list-meta">Current public research-set entry for counterparty inspection. Not a reviewed record.</p>
+            <div class="list-meta-tags">
+              <span class="list-tag"><strong>Wrapper</strong>Swiss nonprofit foundation</span>
+              <span class="list-tag"><strong>Jurisdiction</strong>Switzerland</span>
+            </div>
           </div>
-          <span class="list-row-action">Open</span>
+          <span class="list-row-action">Inspect</span>
         </a>
       
-        <a class="list-row" href="/jito-foundation/">
-          <div>
+        <a
+          class="list-row"
+          href="/jito-foundation/"
+          data-list-row
+          data-name="Jito Foundation"
+          data-legal-name="Jito Foundation"
+          data-wrapper="foundation company"
+          data-jurisdiction="Cayman Islands"
+        >
+          <div class="list-row-copy">
             <span class="entity-status">Research set</span>
             <span class="list-name">Jito Foundation</span>
-            <p class="list-meta">foundation company · Cayman Islands</p>
+            <p class="list-meta">Current public research-set entry for counterparty inspection. Not a reviewed record.</p>
+            <div class="list-meta-tags">
+              <span class="list-tag"><strong>Wrapper</strong>foundation company</span>
+              <span class="list-tag"><strong>Jurisdiction</strong>Cayman Islands</span>
+            </div>
           </div>
-          <span class="list-row-action">Open</span>
+          <span class="list-row-action">Inspect</span>
         </a>
       
-        <a class="list-row" href="/manta-foundation/">
-          <div>
+        <a
+          class="list-row"
+          href="/manta-foundation/"
+          data-list-row
+          data-name="Manta Foundation"
+          data-legal-name="Manta Foundation"
+          data-wrapper="foundation"
+          data-jurisdiction="Jurisdiction pending"
+        >
+          <div class="list-row-copy">
             <span class="entity-status">Research set</span>
             <span class="list-name">Manta Foundation</span>
-            <p class="list-meta">foundation · Jurisdiction pending</p>
+            <p class="list-meta">Current public research-set entry for counterparty inspection. Not a reviewed record.</p>
+            <div class="list-meta-tags">
+              <span class="list-tag"><strong>Wrapper</strong>foundation</span>
+              <span class="list-tag"><strong>Jurisdiction</strong>Jurisdiction pending</span>
+            </div>
           </div>
-          <span class="list-row-action">Open</span>
+          <span class="list-row-action">Inspect</span>
         </a>
       
-        <a class="list-row" href="/metacartel-ventures/">
-          <div>
+        <a
+          class="list-row"
+          href="/metacartel-ventures/"
+          data-list-row
+          data-name="MetaCartel Ventures"
+          data-legal-name="MetaCartel Ventures"
+          data-wrapper="member-managed Delaware LLC"
+          data-jurisdiction="Delaware, United States"
+        >
+          <div class="list-row-copy">
             <span class="entity-status">Research set</span>
             <span class="list-name">MetaCartel Ventures</span>
-            <p class="list-meta">member-managed Delaware LLC · Delaware, United States</p>
+            <p class="list-meta">Current public research-set entry for counterparty inspection. Not a reviewed record.</p>
+            <div class="list-meta-tags">
+              <span class="list-tag"><strong>Wrapper</strong>member-managed Delaware LLC</span>
+              <span class="list-tag"><strong>Jurisdiction</strong>Delaware, United States</span>
+            </div>
           </div>
-          <span class="list-row-action">Open</span>
+          <span class="list-row-action">Inspect</span>
         </a>
       
-        <a class="list-row" href="/mina-foundation/">
-          <div>
+        <a
+          class="list-row"
+          href="/mina-foundation/"
+          data-list-row
+          data-name="Mina Foundation"
+          data-legal-name="Mina Foundation"
+          data-wrapper="Stiftung / public benefit foundation"
+          data-jurisdiction="Switzerland"
+        >
+          <div class="list-row-copy">
             <span class="entity-status">Research set</span>
             <span class="list-name">Mina Foundation</span>
-            <p class="list-meta">Stiftung / public benefit foundation · Switzerland</p>
+            <p class="list-meta">Current public research-set entry for counterparty inspection. Not a reviewed record.</p>
+            <div class="list-meta-tags">
+              <span class="list-tag"><strong>Wrapper</strong>Stiftung / public benefit foundation</span>
+              <span class="list-tag"><strong>Jurisdiction</strong>Switzerland</span>
+            </div>
           </div>
-          <span class="list-row-action">Open</span>
+          <span class="list-row-action">Inspect</span>
         </a>
       
-        <a class="list-row" href="/nouns-foundation/">
-          <div>
+        <a
+          class="list-row"
+          href="/nouns-foundation/"
+          data-list-row
+          data-name="Nouns Foundation"
+          data-legal-name="Nouns Foundation"
+          data-wrapper="foundation company"
+          data-jurisdiction="Cayman Islands"
+        >
+          <div class="list-row-copy">
             <span class="entity-status">Research set</span>
             <span class="list-name">Nouns Foundation</span>
-            <p class="list-meta">foundation company · Cayman Islands</p>
+            <p class="list-meta">Current public research-set entry for counterparty inspection. Not a reviewed record.</p>
+            <div class="list-meta-tags">
+              <span class="list-tag"><strong>Wrapper</strong>foundation company</span>
+              <span class="list-tag"><strong>Jurisdiction</strong>Cayman Islands</span>
+            </div>
           </div>
-          <span class="list-row-action">Open</span>
+          <span class="list-row-action">Inspect</span>
         </a>
       
-        <a class="list-row" href="/optimism-foundation/">
-          <div>
+        <a
+          class="list-row"
+          href="/optimism-foundation/"
+          data-list-row
+          data-name="Optimism Foundation"
+          data-legal-name="The Optimism Foundation"
+          data-wrapper="foundation company"
+          data-jurisdiction="Cayman Islands"
+        >
+          <div class="list-row-copy">
             <span class="entity-status">Research set</span>
             <span class="list-name">Optimism Foundation</span>
-            <p class="list-meta">foundation company · Cayman Islands</p>
+            <p class="list-meta">Current public research-set entry for counterparty inspection. Not a reviewed record.</p>
+            <div class="list-meta-tags">
+              <span class="list-tag"><strong>Wrapper</strong>foundation company</span>
+              <span class="list-tag"><strong>Jurisdiction</strong>Cayman Islands</span>
+            </div>
           </div>
-          <span class="list-row-action">Open</span>
+          <span class="list-row-action">Inspect</span>
         </a>
       
-        <a class="list-row" href="/pyth-dao/">
-          <div>
+        <a
+          class="list-row"
+          href="/pyth-dao/"
+          data-list-row
+          data-name="Pyth DAO"
+          data-legal-name="Pyth DAO LLC"
+          data-wrapper="DAO LLC"
+          data-jurisdiction="Republic of Marshall Islands"
+        >
+          <div class="list-row-copy">
             <span class="entity-status">Research set</span>
             <span class="list-name">Pyth DAO</span>
-            <p class="list-meta">DAO LLC · Republic of Marshall Islands</p>
+            <p class="list-meta">Current public research-set entry for counterparty inspection. Not a reviewed record.</p>
+            <div class="list-meta-tags">
+              <span class="list-tag"><strong>Wrapper</strong>DAO LLC</span>
+              <span class="list-tag"><strong>Jurisdiction</strong>Republic of Marshall Islands</span>
+            </div>
           </div>
-          <span class="list-row-action">Open</span>
+          <span class="list-row-action">Inspect</span>
         </a>
       
-        <a class="list-row" href="/safe-ecosystem-foundation/">
-          <div>
+        <a
+          class="list-row"
+          href="/safe-ecosystem-foundation/"
+          data-list-row
+          data-name="Safe Ecosystem Foundation"
+          data-legal-name="Safe Ökosystem Stiftung"
+          data-wrapper="Stiftung"
+          data-jurisdiction="Switzerland"
+        >
+          <div class="list-row-copy">
             <span class="entity-status">Research set</span>
             <span class="list-name">Safe Ecosystem Foundation</span>
-            <p class="list-meta">Stiftung · Switzerland</p>
+            <p class="list-meta">Current public research-set entry for counterparty inspection. Not a reviewed record.</p>
+            <div class="list-meta-tags">
+              <span class="list-tag"><strong>Wrapper</strong>Stiftung</span>
+              <span class="list-tag"><strong>Jurisdiction</strong>Switzerland</span>
+            </div>
           </div>
-          <span class="list-row-action">Open</span>
+          <span class="list-row-action">Inspect</span>
         </a>
       
-        <a class="list-row" href="/starknet-foundation/">
-          <div>
+        <a
+          class="list-row"
+          href="/starknet-foundation/"
+          data-list-row
+          data-name="Starknet Foundation"
+          data-legal-name="Starknet Foundation"
+          data-wrapper="not-for-profit"
+          data-jurisdiction="Cayman Islands"
+        >
+          <div class="list-row-copy">
             <span class="entity-status">Research set</span>
             <span class="list-name">Starknet Foundation</span>
-            <p class="list-meta">not-for-profit · Cayman Islands</p>
+            <p class="list-meta">Current public research-set entry for counterparty inspection. Not a reviewed record.</p>
+            <div class="list-meta-tags">
+              <span class="list-tag"><strong>Wrapper</strong>not-for-profit</span>
+              <span class="list-tag"><strong>Jurisdiction</strong>Cayman Islands</span>
+            </div>
           </div>
-          <span class="list-row-action">Open</span>
+          <span class="list-row-action">Inspect</span>
         </a>
       
-        <a class="list-row" href="/tezos-foundation/">
-          <div>
+        <a
+          class="list-row"
+          href="/tezos-foundation/"
+          data-list-row
+          data-name="Tezos Foundation"
+          data-legal-name="Tezos Foundation"
+          data-wrapper="Swiss foundation"
+          data-jurisdiction="Switzerland"
+        >
+          <div class="list-row-copy">
             <span class="entity-status">Research set</span>
             <span class="list-name">Tezos Foundation</span>
-            <p class="list-meta">Swiss foundation · Switzerland</p>
+            <p class="list-meta">Current public research-set entry for counterparty inspection. Not a reviewed record.</p>
+            <div class="list-meta-tags">
+              <span class="list-tag"><strong>Wrapper</strong>Swiss foundation</span>
+              <span class="list-tag"><strong>Jurisdiction</strong>Switzerland</span>
+            </div>
           </div>
-          <span class="list-row-action">Open</span>
+          <span class="list-row-action">Inspect</span>
         </a>
       
-        <a class="list-row" href="/the-lao/">
-          <div>
+        <a
+          class="list-row"
+          href="/the-lao/"
+          data-list-row
+          data-name="The LAO"
+          data-legal-name="The LAO"
+          data-wrapper="Delaware LLC"
+          data-jurisdiction="Delaware, United States"
+        >
+          <div class="list-row-copy">
             <span class="entity-status">Research set</span>
             <span class="list-name">The LAO</span>
-            <p class="list-meta">Delaware LLC · Delaware, United States</p>
+            <p class="list-meta">Current public research-set entry for counterparty inspection. Not a reviewed record.</p>
+            <div class="list-meta-tags">
+              <span class="list-tag"><strong>Wrapper</strong>Delaware LLC</span>
+              <span class="list-tag"><strong>Jurisdiction</strong>Delaware, United States</span>
+            </div>
           </div>
-          <span class="list-row-action">Open</span>
+          <span class="list-row-action">Inspect</span>
         </a>
       
-        <a class="list-row" href="/uniswap-foundation/">
-          <div>
+        <a
+          class="list-row"
+          href="/uniswap-foundation/"
+          data-list-row
+          data-name="Uniswap Foundation"
+          data-legal-name="Uniswap Foundation"
+          data-wrapper="501(c)(4) nonprofit"
+          data-jurisdiction="United States"
+        >
+          <div class="list-row-copy">
             <span class="entity-status">Research set</span>
             <span class="list-name">Uniswap Foundation</span>
-            <p class="list-meta">501(c)(4) nonprofit · United States</p>
+            <p class="list-meta">Current public research-set entry for counterparty inspection. Not a reviewed record.</p>
+            <div class="list-meta-tags">
+              <span class="list-tag"><strong>Wrapper</strong>501(c)(4) nonprofit</span>
+              <span class="list-tag"><strong>Jurisdiction</strong>United States</span>
+            </div>
           </div>
-          <span class="list-row-action">Open</span>
+          <span class="list-row-action">Inspect</span>
         </a>
       
-        <a class="list-row" href="/wormhole-foundation/">
-          <div>
+        <a
+          class="list-row"
+          href="/wormhole-foundation/"
+          data-list-row
+          data-name="Wormhole Foundation"
+          data-legal-name="Wormhole Foundation"
+          data-wrapper="foundation"
+          data-jurisdiction="Cayman Islands"
+        >
+          <div class="list-row-copy">
             <span class="entity-status">Research set</span>
             <span class="list-name">Wormhole Foundation</span>
-            <p class="list-meta">foundation · Cayman Islands</p>
+            <p class="list-meta">Current public research-set entry for counterparty inspection. Not a reviewed record.</p>
+            <div class="list-meta-tags">
+              <span class="list-tag"><strong>Wrapper</strong>foundation</span>
+              <span class="list-tag"><strong>Jurisdiction</strong>Cayman Islands</span>
+            </div>
           </div>
-          <span class="list-row-action">Open</span>
+          <span class="list-row-action">Inspect</span>
         </a>
       
-        <a class="list-row" href="/zksync-association/">
-          <div>
+        <a
+          class="list-row"
+          href="/zksync-association/"
+          data-list-row
+          data-name="ZKsync Association"
+          data-legal-name="ZKsync Association"
+          data-wrapper="nonprofit association"
+          data-jurisdiction="Austria"
+        >
+          <div class="list-row-copy">
             <span class="entity-status">Research set</span>
             <span class="list-name">ZKsync Association</span>
-            <p class="list-meta">nonprofit association · Austria</p>
+            <p class="list-meta">Current public research-set entry for counterparty inspection. Not a reviewed record.</p>
+            <div class="list-meta-tags">
+              <span class="list-tag"><strong>Wrapper</strong>nonprofit association</span>
+              <span class="list-tag"><strong>Jurisdiction</strong>Austria</span>
+            </div>
           </div>
-          <span class="list-row-action">Open</span>
+          <span class="list-row-action">Inspect</span>
         </a>
       
+        </div>
+        <div class="list-empty" data-list-empty hidden>
+          <h3>No matching research-set entries.</h3>
+          <p class="entity-note">Try clearing one or more filters or broadening the search term.</p>
+        </div>
       </section>
     
       </main>
@@ -272,7 +631,7 @@
       <footer class="site-footer">
         <div class="footer-brand">
           <p class="footer-product">GDER · Governed Digital Entity Register</p>
-          <p class="footer-note">An Old School product.</p>
+          <p class="footer-note">Counterparties-first public inspection.</p>
           <p class="footer-disclaimer">GDER is a governed, publicly inspectable register. It is not presented as a sovereign-registry replacement.</p>
         </div>
 

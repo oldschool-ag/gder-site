@@ -1,0 +1,384 @@
+{
+  "dao-uniswap-foundation": {
+    "token_refs": [
+      {
+        "label": "UNI token",
+        "network": "Ethereum",
+        "address": "0x1f9840a85d5af5bf1d1762f925bdaddc4201f984",
+        "url": "https://etherscan.io/token/0x1f9840a85d5af5bf1d1762f925bdaddc4201f984",
+        "source_url": "https://etherscan.io/token/0x1f9840a85d5af5bf1d1762f925bdaddc4201f984",
+        "source_label": "Etherscan"
+      }
+    ],
+    "treasury_refs": [
+      {
+        "label": "Uniswap governance treasury",
+        "network": "Ethereum",
+        "url": "https://www.tally.xyz/gov/uniswap/treasury",
+        "source_url": "https://www.tally.xyz/gov/uniswap/treasury",
+        "source_label": "Tally",
+        "control_model": "Governance timelock (not multisig)",
+        "treasury_address": "0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
+        "controllers": [
+          {
+            "label": "Governor",
+            "address": "0x408ED6354d4973f66138C91495F2f2FCbd8724C3",
+            "url": "https://etherscan.io/address/0x408ED6354d4973f66138C91495F2f2FCbd8724C3"
+          }
+        ],
+        "control_source_url": "https://docs.uniswap.org/contracts/v3/reference/governance/overview",
+        "control_source_label": "Uniswap docs",
+        "notes": [
+          "Treasury execution is routed through the governance timelock surfaced on the public Tally treasury page rather than a Safe-style multisig wallet."
+        ]
+      }
+    ]
+  },
+  "dao-arbitrum-foundation": {
+    "token_refs": [
+      {
+        "label": "ARB token",
+        "network": "Arbitrum One",
+        "address": "0x912ce59144191c1204e64559fe8253a0e49e6548",
+        "url": "https://arbiscan.io/token/0x912ce59144191c1204e64559fe8253a0e49e6548",
+        "source_url": "https://arbiscan.io/token/0x912ce59144191c1204e64559fe8253a0e49e6548",
+        "source_label": "Arbiscan"
+      }
+    ],
+    "treasury_refs": [
+      {
+        "label": "Arbitrum governance treasury",
+        "network": "Arbitrum One",
+        "url": "https://www.tally.xyz/gov/arbitrum/treasury",
+        "source_url": "https://www.tally.xyz/gov/arbitrum/treasury",
+        "source_label": "Tally",
+        "control_model": "Governance timelock (not multisig)",
+        "treasury_address": "0xbFc1FECa8B09A5c5D3EFfE7429eBE24b9c09EF58",
+        "controllers": [
+          {
+            "label": "Treasury governor",
+            "address": "0x789fC99093B09aD01C34DC7251D0C89ce743e5a4",
+            "url": "https://arbiscan.io/address/0x789fC99093B09aD01C34DC7251D0C89ce743e5a4"
+          }
+        ],
+        "control_source_url": "https://www.tally.xyz/gov/arbitrum/treasury",
+        "control_source_label": "Tally treasury metadata",
+        "notes": [
+          "Tally exposes a dedicated Arbitrum Treasury governor and treasury timelock pair, which indicates contract-based DAO custody rather than a multisig wallet."
+        ]
+      }
+    ]
+  },
+  "dao-optimism-foundation": {
+    "token_refs": [
+      {
+        "label": "OP token",
+        "network": "OP Mainnet",
+        "address": "0x4200000000000000000000000000000000000042",
+        "url": "https://optimistic.etherscan.io/token/0x4200000000000000000000000000000000000042",
+        "source_url": "https://optimistic.etherscan.io/token/0x4200000000000000000000000000000000000042",
+        "source_label": "Optimism Etherscan"
+      }
+    ],
+    "treasury_refs": [
+      {
+        "label": "Optimism governance treasury",
+        "network": "OP Mainnet",
+        "url": "https://www.tally.xyz/gov/optimism/treasury",
+        "source_url": "https://www.tally.xyz/gov/optimism/treasury",
+        "source_label": "Tally",
+        "control_model": "Unknown / needs verification",
+        "control_source_url": "https://vote.optimism.io/proposals/50775220738623167695573388814398057544437236582252674861818535424434586434657",
+        "control_source_label": "Optimism governance proposal",
+        "notes": [
+          "Optimism governance has moved toward onchain treasury execution, but this research pass did not produce a clean treasury timelock or multisig mapping suitable for publication."
+        ]
+      }
+    ]
+  },
+  "dao-ens-foundation-limited": {
+    "token_refs": [
+      {
+        "label": "ENS token",
+        "network": "Ethereum",
+        "address": "0xc18360217d8f7ab5e7c516566761ea12ce7f9d72",
+        "url": "https://etherscan.io/token/0xc18360217d8f7ab5e7c516566761ea12ce7f9d72",
+        "source_url": "https://etherscan.io/address/0xc18360217d8f7ab5e7c516566761ea12ce7f9d72",
+        "source_label": "Etherscan"
+      }
+    ],
+    "treasury_refs": [
+      {
+        "label": "ENS governance treasury",
+        "network": "Ethereum",
+        "url": "https://www.tally.xyz/gov/ens/treasury",
+        "source_url": "https://www.tally.xyz/gov/ens/treasury",
+        "source_label": "Tally",
+        "control_model": "DAO timelock / wallet surface (not confirmed multisig)",
+        "treasury_address": "0xFe89cc7aBB2C4183683ab71653C4cdc9B02D44b7",
+        "control_source_url": "https://docs.ens.domains/dao/proposals/0.1/",
+        "control_source_label": "ENS docs",
+        "notes": [
+          "ENS docs describe wallet.ensdao.eth as the DAO timelock that received the treasury transfer from multisig.ens.eth.",
+          "A later ENS proposal refers to the DAO wallet as a multisig while creating a separate 3-of-4 TWAP Safe for swaps, so the core controller address set is left unpublished until we have a tighter primary source."
+        ]
+      }
+    ]
+  },
+  "dao-ape-foundation": {
+    "token_refs": [
+      {
+        "label": "APE token",
+        "network": "Ethereum",
+        "address": "0x4d224452801aced8b2f0aebe155379bb5d594381",
+        "url": "https://etherscan.io/token/0x4d224452801aced8b2f0aebe155379bb5d594381",
+        "source_url": "https://etherscan.io/address/0x4d224452801aced8b2f0aebe155379bb5d594381",
+        "source_label": "Etherscan"
+      }
+    ]
+  },
+  "dao-pyth-dao-llc": {
+    "token_refs": [
+      {
+        "label": "PYTH token",
+        "network": "Solana",
+        "address": "HZ1JovNiVvGrGNiiYvEozEVgZ58xaU3RKwX8eACQBCt3",
+        "url": "https://solscan.io/token/HZ1JovNiVvGrGNiiYvEozEVgZ58xaU3RKwX8eACQBCt3",
+        "source_url": "https://docs.pyth.network/home/pyth-token/pyth-token-addresses",
+        "source_label": "Pyth docs"
+      }
+    ]
+  },
+  "dao-helium-foundation": {
+    "token_refs": [
+      {
+        "label": "HNT token",
+        "network": "Solana",
+        "address": "hntyVP6YFm1Hg25TN9WGLqM12b8TQmcknKrdu1oxWux",
+        "url": "https://solscan.io/token/hntyVP6YFm1Hg25TN9WGLqM12b8TQmcknKrdu1oxWux",
+        "source_url": "https://docs.helium.com/tokens/hnt-token/",
+        "source_label": "Helium docs"
+      }
+    ]
+  },
+  "dao-jito-foundation": {
+    "token_refs": [
+      {
+        "label": "JTO token",
+        "network": "Solana",
+        "address": "jtojtomepa8beP8AuQc6eXt5FriJwfFMwQx2v2f9mCL",
+        "url": "https://solscan.io/token/jtojtomepa8beP8AuQc6eXt5FriJwfFMwQx2v2f9mCL",
+        "source_url": "https://www.jito.network/blog/airdrop-claiming-details/",
+        "source_label": "Jito Foundation"
+      }
+    ]
+  },
+  "dao-tezos-foundation": {
+    "notes": [
+      "XTZ is the native asset of Tezos and does not have a token contract address."
+    ]
+  },
+  "dao-interchain-foundation": {
+    "notes": [
+      "ATOM is the native asset of the Cosmos Hub and does not have a token contract address."
+    ]
+  },
+  "dao-cardano-foundation": {
+    "notes": [
+      "ADA is Cardano’s native asset and does not have a token contract address."
+    ]
+  },
+  "dao-zksync-association": {
+    "token_refs": [
+      {
+        "label": "ZK token",
+        "network": "ZKsync Era",
+        "address": "0x5a7d6b2f92c77fad6ccabd7ee0624e64907eaf3e",
+        "url": "https://explorer.zksync.io/address/0x5a7d6b2f92c77fad6ccabd7ee0624e64907eaf3e",
+        "source_url": "https://api.coingecko.com/api/v3/coins/zksync",
+        "source_label": "CoinGecko API"
+      }
+    ]
+  },
+  "dao-mina-foundation": {
+    "notes": [
+      "MINA is the native asset of the Mina protocol and does not have a token contract address."
+    ]
+  },
+  "dao-1inch-foundation": {
+    "token_refs": [
+      {
+        "label": "1INCH token",
+        "network": "Ethereum",
+        "address": "0x111111111117dc0aa78b770fa6a738034120c302",
+        "url": "https://etherscan.io/token/0x111111111117dc0aa78b770fa6a738034120c302",
+        "source_url": "https://etherscan.io/token/0x111111111117dc0aa78b770fa6a738034120c302",
+        "source_label": "Etherscan"
+      }
+    ]
+  },
+  "dao-safe-ecosystem-foundation": {
+    "token_refs": [
+      {
+        "label": "SAFE token",
+        "network": "Ethereum",
+        "address": "0x5afe3855358e112b5647b952709e6165e1c1eeee",
+        "url": "https://etherscan.io/token/0x5afe3855358e112b5647b952709e6165e1c1eeee",
+        "source_url": "https://safefoundation.org/blog/safe-tokenomics",
+        "source_label": "Safe Foundation"
+      }
+    ],
+    "treasury_refs": [
+      {
+        "label": "SafeDAO governance treasury",
+        "network": "Ethereum",
+        "url": "https://www.tally.xyz/gov/safe-dao/treasury",
+        "source_url": "https://www.tally.xyz/gov/safe-dao/treasury",
+        "source_label": "Tally",
+        "control_model": "Unknown / needs verification",
+        "control_source_url": "https://www.tally.xyz/gov/safe-dao/treasury",
+        "control_source_label": "Tally treasury metadata",
+        "notes": [
+          "The public treasury page surfaced in this pass appears to resolve to a Sepolia governance instance with no meaningful treasury balance, so multisig status was not asserted."
+        ]
+      }
+    ]
+  },
+  "dao-wormhole-foundation": {
+    "token_refs": [
+      {
+        "label": "W token",
+        "network": "Solana",
+        "address": "85VBFQZC9TZkfaptBWjvUw7YbZjy52A6mjtPGjstQAmQ",
+        "url": "https://solscan.io/token/85VBFQZC9TZkfaptBWjvUw7YbZjy52A6mjtPGjstQAmQ",
+        "source_url": "https://www.solflare.com/prices/wormhole-token/85VBFQZC9TZkfaptBWjvUw7YbZjy52A6mjtPGjstQAmQ/",
+        "source_label": "Solflare"
+      }
+    ],
+    "treasury_refs": [
+      {
+        "label": "Wormhole governance treasury",
+        "network": "Ethereum",
+        "url": "https://www.tally.xyz/gov/wormhole/treasury",
+        "source_url": "https://www.tally.xyz/gov/wormhole/treasury",
+        "source_label": "Tally",
+        "control_model": "Multichain governance timelock (not multisig)",
+        "treasury_address": "0xfBc580c0289121673EfB7375fF111bD2A4db4654",
+        "controllers": [
+          {
+            "label": "Hub governor",
+            "address": "0x239B1F17E6Efa75662cB87781025538babF1Cf6b",
+            "url": "https://etherscan.io/address/0x239B1F17E6Efa75662cB87781025538babF1Cf6b"
+          }
+        ],
+        "control_source_url": "https://wormhole.com/docs/products/multigov/overview/",
+        "control_source_label": "Wormhole MultiGov docs",
+        "notes": [
+          "Wormhole treasury execution is modeled through hub-and-spoke multichain governance rather than a single Safe-style multisig wallet."
+        ]
+      }
+    ],
+    "notes": [
+      "W is multichain; this reference uses the publicly surfaced Solana mint."
+    ]
+  },
+  "dao-celo-foundation": {
+    "notes": [
+      "CELO is treated as a native asset in current Celo documentation, so no standalone token contract address was added in this pass."
+    ]
+  },
+  "dao-starknet-foundation": {
+    "token_refs": [
+      {
+        "label": "STRK token",
+        "network": "Starknet",
+        "address": "0x04718f5a0fc34cc1af16a1cdee98ffb20c31f5cd61d6ab07201858f4287c938d",
+        "url": "https://starkscan.co/contract/0x04718f5a0fc34cc1af16a1cdee98ffb20c31f5cd61d6ab07201858f4287c938d",
+        "source_url": "https://docs.starknet.io/learn/cheatsheets/chain-info",
+        "source_label": "Starknet docs"
+      }
+    ]
+  },
+  "dao-balancer-foundation": {
+    "token_refs": [
+      {
+        "label": "BAL token",
+        "network": "Ethereum",
+        "address": "0xba100000625a3754423978a60c9317c58a424e3d",
+        "url": "https://etherscan.io/token/0xba100000625a3754423978a60c9317c58a424e3d",
+        "source_url": "https://docs.balancer.finance/protocol/bal-balancer-governance-token",
+        "source_label": "Balancer docs"
+      }
+    ]
+  },
+  "dao-aleph-zero-foundation": {
+    "notes": [
+      "AZERO is the native asset of Aleph Zero and does not have a token contract address."
+    ]
+  },
+  "dao-manta-foundation": {
+    "token_refs": [
+      {
+        "label": "MANTA token",
+        "network": "Manta Pacific",
+        "address": "0x95cef13441be50d20ca4558cc0a27b601ac544e5",
+        "url": "https://pacific-explorer.manta.network/address/0x95cef13441be50d20ca4558cc0a27b601ac544e5",
+        "source_url": "https://docs.manta.network/docs/mantaToken/",
+        "source_label": "Manta docs"
+      }
+    ]
+  },
+  "dao-nouns-foundation": {
+    "token_refs": [
+      {
+        "label": "Nouns token (ERC-721)",
+        "network": "Ethereum",
+        "address": "0x9c8ff314c9bc7f6e59a9d9225fb22946427edc03",
+        "url": "https://etherscan.io/address/0x9c8ff314c9bc7f6e59a9d9225fb22946427edc03",
+        "source_url": "https://etherscan.io/address/0x9c8ff314c9bc7f6e59a9d9225fb22946427edc03",
+        "source_label": "Etherscan"
+      }
+    ],
+    "treasury_refs": [
+      {
+        "label": "Nouns governance treasury",
+        "network": "Ethereum",
+        "url": "https://www.tally.xyz/gov/nounsdao/treasury",
+        "source_url": "https://www.tally.xyz/gov/nounsdao/treasury",
+        "source_label": "Tally",
+        "control_model": "Governance timelock (not multisig)",
+        "treasury_address": "0x0BC3807Ec262cB779b38D65b38158acC3bfedE10",
+        "controllers": [
+          {
+            "label": "Governor",
+            "address": "0x6f3E6272A167e8AcCb32072d08E0957F9c79223d",
+            "url": "https://etherscan.io/address/0x6f3E6272A167e8AcCb32072d08E0957F9c79223d"
+          }
+        ],
+        "control_source_url": "https://nouns.biz/nouns-dao-contracts/",
+        "control_source_label": "Nouns docs",
+        "notes": [
+          "The Nouns treasury surface is a timelock controlled by the DAO governor, not a multisig wallet."
+        ]
+      }
+    ],
+    "notes": [
+      "Nouns governance is keyed to an ERC-721 governance token rather than a fungible ERC-20."
+    ]
+  },
+  "dao-the-lao": {
+    "notes": [
+      "No token address or onchain treasury link was added for this entry in the current research pass."
+    ]
+  },
+  "dao-metacartel-ventures": {
+    "notes": [
+      "No token address or onchain treasury link was added for this entry in the current research pass."
+    ]
+  },
+  "dao-flamingo-dao-llc": {
+    "notes": [
+      "No token address or onchain treasury link was added for this entry in the current research pass."
+    ]
+  }
+}

@@ -5,10 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#12151d" />
     <meta name="robots" content="index,follow" />
-    <meta
-      name="description"
-      content="GDER is a public register for crypto-native entities with documented wrappers, governance, and operating control. It helps counterparties inspect what exists, where it is organized, and what evidence supports it."
-    />
+    <meta name="description" content="GDER is a public register for crypto-native entities with documented wrappers, governance, and operating control. It helps counterparties inspect what exists, where it is organized, and what evidence supports it." />
     <title>GDER — Governed Digital Entity Register</title>
     <link rel="canonical" href="https://gder.net/" />
     <link rel="icon" href="/assets/favicon.ico" sizes="any" />
@@ -16,10 +13,11 @@
     <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
     <link rel="stylesheet" href="/styles.css" />
+    
     <script src="/entities.js" defer></script>
     <script src="/script.js" defer></script>
   </head>
-  <body>
+  <body class="">
     <div class="site-shell">
       <header class="site-header">
         <a class="brand-lockup" href="/" aria-label="GDER home">
@@ -27,54 +25,118 @@
         </a>
 
         <nav class="site-nav" aria-label="Primary">
-          <a href="/full-list/">Show all entities</a>
-          <a class="button button-primary button-compact" href="/newlisting/">Request listing</a>
+          <a href="/full-list/">Research set</a>
+          <a href="/#method">Method</a>
+          <a class="button button-primary button-compact" href="/newlisting/">Request review</a>
         </nav>
       </header>
 
       <main>
-        <section class="hero-card">
-          <p class="eyebrow">Governed public record</p>
+        
+      <section class="hero-card hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow">Public record system</p>
           <h1>A public record system for governed digital entities.</h1>
           <p class="hero-subhead">
             GDER is a public register for crypto-native entities with documented wrappers, governance, and operating control. It helps counterparties inspect what exists, where it is organized, and what evidence supports it.
           </p>
+          <p class="hero-proof">Research is collected. Records are reviewed.</p>
+
+          <div class="hero-actions">
+            <a class="button button-primary" href="/newlisting/">Request review</a>
+            <a class="button button-secondary" href="/full-list/">Browse research set</a>
+          </div>
 
           <div class="search-block" data-autocomplete-root>
-            <label class="sr-only" for="entity-search">Enter name of entity</label>
+            <label class="search-label" for="entity-search">Search the research set</label>
             <input
               id="entity-search"
               class="search-input"
               type="search"
-              placeholder="Enter name of entity"
+              placeholder="Enter entity name"
               autocomplete="off"
               spellcheck="false"
               data-search-input
             />
             <div class="search-suggestions" data-search-suggestions hidden></div>
           </div>
+        </div>
 
-          <div class="hero-actions centered-actions">
-            <a class="button button-secondary" href="/full-list/">Show all entities</a>
-          </div>
-        </section>
+        <figure class="hero-specimen">
+          <figcaption class="artifact-caption">Reviewed record specimen</figcaption>
+          <img src="/assets/gder-hero-record.svg" alt="GDER reviewed record specimen" width="896" height="1042" />
+          <p class="artifact-support">Reviewed records and portable extracts appear only after structured review.</p>
+        </figure>
+      </section>
 
-        <section class="request-card">
-          <div>
-            <p class="eyebrow">Request listing</p>
-            <h2>Request a new listing for your entity.</h2>
-            <p class="section-copy">
-              Use the listing request page to submit the required information and an official email address connected to the entity.
-            </p>
-          </div>
-          <a class="button button-primary" href="/newlisting/">Request listing</a>
-        </section>
+      <section class="trust-band">
+        <div class="section-intro-block">
+          <p class="eyebrow">How the public site works</p>
+          <h2>Three clearly separated public surfaces.</h2>
+          <p class="section-copy">GDER should not be read as a flat directory. The public site separates collected research, reviewed records, and verification.</p>
+        </div>
+
+        <div class="surface-band">
+          <article class="surface-card">
+            <h3>Research set</h3>
+            <p>Public research entries help counterparties inspect what has been collected so far. They are clearly labeled as research-set entries.</p>
+          </article>
+          <article class="surface-card">
+            <h3>Reviewed record</h3>
+            <p>A reviewed record in GDER, supported by structured evidence and verification.</p>
+          </article>
+          <article class="surface-card">
+            <h3>Verify</h3>
+            <p>Verification should resolve the underlying record and source evidence.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="page-card method-card" id="method">
+        <div class="method-copy">
+          <p class="eyebrow">Method</p>
+          <h2>Evidence before confidence.</h2>
+          <p class="section-copy">GDER reviews evidence. It does not sell placement or ranking.</p>
+          <ul class="method-list">
+            <li>Counterparties come first.</li>
+            <li>Research-set entries are separate from reviewed records.</li>
+            <li>Reviewed records are tied to source evidence.</li>
+            <li>Verification should resolve back to the underlying record.</li>
+            <li>GDER is not presented as a sovereign-registry replacement.</li>
+          </ul>
+          <p class="method-support">The point of the public site is legibility, not promotion.</p>
+        </div>
+        <div class="method-art">
+          <img src="/assets/gder-review-flow.svg" alt="GDER review flow" width="1080" height="864" />
+        </div>
+      </section>
+
+      <section class="page-card preview-card">
+        <p class="eyebrow">Public research set</p>
+        <h2>Browse current research-set entries.</h2>
+        <p class="section-copy">If you are conducting inspection or research, start with the public research set.</p>
+        <p class="boundary-note">These are research-set entries. A reviewed record is a different surface and appears only after structured review.</p>
+        <div class="preview-actions">
+          <a class="button button-secondary" href="/full-list/">Browse research set</a>
+        </div>
+      </section>
+
+      <section class="request-card request-panel">
+        <div>
+          <p class="eyebrow">For representatives and authorized delegates</p>
+          <h2>Open representative intake.</h2>
+          <p class="section-copy">Use representative intake to request a reviewed record or to submit updated evidence for an existing research-set entry. Counterparties should use the research set for inspection, not this intake flow.</p>
+          <p class="request-support">Research is public. Reviewed records require structured review and authority checks.</p>
+        </div>
+        <a class="button button-primary" href="/newlisting/">Representative intake</a>
+      </section>
+    
       </main>
 
       <footer class="site-footer">
         <div class="footer-brand">
           <p class="footer-product">GDER · Governed Digital Entity Register</p>
-          <p class="footer-note">An Old School product.</p>
+          <p class="footer-note">Counterparties-first public inspection.</p>
           <p class="footer-disclaimer">GDER is a governed, publicly inspectable register. It is not presented as a sovereign-registry replacement.</p>
         </div>
 
