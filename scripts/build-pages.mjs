@@ -298,7 +298,47 @@ function writePage(dirName, content) {
   fs.writeFileSync(path.join(dirPath, 'index.html'), content);
 }
 
-function layout({ title, description, canonicalPath, bodyClass = '', main }) {
+function trimEnv(name) {
+  return process.env[name] ? process.env[name].trim() : '';
+}
+
+function joinUrl(base, pathName) {
+  if (!base) return '';
+  return `${base.replace(/\/+$/, '')}/${pathName.replace(/^\/+/, '')}`;
+}
+
+function buildIntakeRuntimeConfig() {
+  const functionsBaseUrl = trimEnv('GDER_INTAKE_FUNCTIONS_BASE_URL');
+  const endpoints = {
+    draft: trimEnv('GDER_INTAKE_DRAFT_ENDPOINT') || joinUrl(functionsBaseUrl, 'intake-draft') || null,
+    submit: trimEnv('GDER_INTAKE_SUBMIT_ENDPOINT') || joinUrl(functionsBaseUrl, 'intake-submit') || null,
+    confirmEmail: trimEnv('GDER_INTAKE_CONFIRM_EMAIL_ENDPOINT') || joinUrl(functionsBaseUrl, 'intake-confirm-email') || null,
+    status: trimEnv('GDER_INTAKE_STATUS_ENDPOINT') || joinUrl(functionsBaseUrl, 'intake-status') || null,
+    walletChallenge: trimEnv('GDER_INTAKE_WALLET_CHALLENGE_ENDPOINT') || joinUrl(functionsBaseUrl, 'wallet-challenge') || null,
+    walletVerifyTx: trimEnv('GDER_INTAKE_WALLET_VERIFY_TX_ENDPOINT') || joinUrl(functionsBaseUrl, 'wallet-verify-tx') || null,
+  };
+
+  return {
+    enabled: Object.values(endpoints).some(Boolean),
+    publicSiteUrl: trimEnv('GDER_PUBLIC_SITE_URL') || 'https://gder.net',
+    functionsBaseUrl: functionsBaseUrl || null,
+    endpoints,
+    wallet: {
+      breadcrumbAddress: trimEnv('GDER_INTAKE_BREADCRUMB_ADDRESS') || null,
+      chainId: trimEnv('GDER_INTAKE_WALLET_CHAIN_ID') || null,
+      chainLabel: trimEnv('GDER_INTAKE_WALLET_CHAIN_LABEL') || null,
+    },
+  };
+}
+
+const intakeRuntimeConfig = buildIntakeRuntimeConfig();
+
+function renderIntakeConfigScript() {
+  const json = JSON.stringify(intakeRuntimeConfig).replace(/</g, '\\u003c');
+  return `<script id="gder-intake-config" type="application/json">${json}</script>`;
+}
+
+function layout({ title, description, canonicalPath, bodyClass = '', main, headContent = '' }) {
   return `<!doctype html>
 <html lang="en">
   <head>
@@ -314,7 +354,8 @@ function layout({ title, description, canonicalPath, bodyClass = '', main }) {
     <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
     <link rel="stylesheet" href="/styles.css" />
-    <script src="/entities.js" defer></script>
+    ${headContent ? `${headContent}
+    ` : ''}<script src="/entities.js" defer></script>
     <script src="/script.js" defer></script>
   </head>
   <body class="${escapeHtml(bodyClass)}">
@@ -657,84 +698,231 @@ function fullListPage() {
 
 function listingPage() {
   return layout({
-    title: 'Request listing — GDER',
-    description: 'Request a new GDER listing.',
+    title: 'Representative intake — GDER',
+    description: 'Request a reviewed record or submit updated evidence for an entity in GDER.',
     canonicalPath: '/newlisting/',
     bodyClass: 'page-form',
+    headContent: renderIntakeConfigScript(),
     main: `
       <section class="page-card">
-        <p class="eyebrow">Request listing</p>
-        <h1 data-listing-title>Request listing</h1>
+        <p class="eyebrow">Representative intake</p>
+        <h1 data-listing-title>Request a reviewed record or submit updated evidence.</h1>
         <p class="form-intro" data-listing-intro>
-          Fill in the required fields and use an official email address connected to the entity.
+          This intake is for representatives and authorized delegates. Counterparties and researchers should use the public research set for inspection.
         </p>
+        <p class="page-copy">A submission here creates a private case file only. It does not publish a public GDER record automatically.</p>
+      </section>
+
+      <section class="page-card intake-state-card">
+        <div class="list-controls-head">
+          <div>
+            <p class="eyebrow">Current intake state</p>
+            <h2 data-intake-state-heading>No live private intake backend is connected on this public page.</h2>
+            <p class="section-copy" data-intake-state-copy>Your intake is validated, packaged, and saved locally on this device. Nothing is transmitted from this page unless the Supabase endpoints are configured later.</p>
+          </div>
+          <p class="draft-status-note" data-draft-status aria-live="polite">Draft not saved yet.</p>
+        </div>
+        <p class="status-chip" data-intake-state-badge>Local-only fallback active</p>
+        <p class="form-note">Manual fallback remains available after validation: you can copy the structured summary or download the intake package for delivery to hello@gder.net outside this page.</p>
+
+        <section class="status-grid" data-backend-case-card hidden>
+          <article class="status-panel">
+            <p class="eyebrow">Private case file</p>
+            <dl class="status-list">
+              <div><dt>Case reference</dt><dd data-case-reference>Not created yet</dd></div>
+              <div><dt>Case status</dt><dd data-case-status>Draft not synced yet</dd></div>
+              <div><dt>Email verification</dt><dd data-case-email-status>Not started</dd></div>
+              <div><dt>Wallet breadcrumb</dt><dd data-case-wallet-status>Not started</dd></div>
+              <div><dt>Last update</dt><dd data-case-updated-at>—</dd></div>
+            </dl>
+            <button class="button button-secondary button-compact" type="button" data-refresh-status>Refresh status</button>
+          </article>
+        </section>
+      </section>
+
+      <section class="process-strip">
+        <div class="process-art">
+          <img src="/assets/gder-review-flow.svg" alt="GDER review process" width="1080" height="864" />
+        </div>
+        <div class="process-steps">
+          <span>Choose request type</span>
+          <span>Save private draft</span>
+          <span>Verify representative email</span>
+          <span>Structured review</span>
+        </div>
+      </section>
+
+      <section class="page-card submission-card" data-submission-card hidden>
+        <p class="eyebrow">Structured confirmation</p>
+        <h2 data-submission-title>Intake package ready.</h2>
+        <p class="page-copy" data-submission-summary>
+          Your intake has been validated and saved on this device. Because no live backend is connected yet, it has not been transmitted to GDER from this page.
+        </p>
+        <ol class="next-steps-list" data-next-steps>
+          <li>Keep the saved draft on this device or download the package now.</li>
+          <li>Copy the structured summary if you need to deliver it manually.</li>
+          <li>Use the package for manual delivery to hello@gder.net while the intake API is offline.</li>
+        </ol>
+        <div class="form-actions">
+          <button class="button button-primary" type="button" data-download-submission>Download intake package</button>
+          <button class="button button-secondary" type="button" data-copy-submission>Copy structured summary</button>
+          <button class="button button-secondary" type="button" data-return-to-form>Review saved intake</button>
+        </div>
+        <pre class="submission-preview" data-submission-preview hidden></pre>
       </section>
 
       <section class="form-shell">
         <form data-listing-form novalidate>
-          <input type="hidden" name="mode" value="new" data-field-mode />
+          <input type="hidden" name="mode" value="review" data-field-mode />
           <input type="hidden" name="entitySlug" value="" data-field-entity-slug />
+          <input type="hidden" name="walletChallengeReference" value="" data-wallet-challenge-reference />
           <p class="form-feedback" data-form-feedback hidden aria-live="polite"></p>
 
-          <div class="form-grid">
-            <div class="form-field">
-              <label class="field-label" for="entityName">Entity name</label>
-              <input id="entityName" class="field-input" type="text" name="entityName" required data-field-entity-name />
+          <section class="form-section">
+            <div class="form-section-head">
+              <p class="eyebrow">Step 1</p>
+              <h2>Choose the representative task.</h2>
             </div>
-            <div class="form-field">
-              <label class="field-label" for="legalName">Legal name</label>
-              <input id="legalName" class="field-input" type="text" name="legalName" required />
+            <div class="intent-grid" data-intent-group>
+              <label class="intent-card">
+                <input type="radio" name="submissionType" value="review" checked data-intent-option />
+                <span class="intent-card-copy">
+                  <strong>Request reviewed record</strong>
+                  <span>Open a formal review path for this entity and provide the evidence GDER should assess.</span>
+                </span>
+              </label>
+              <label class="intent-card">
+                <input type="radio" name="submissionType" value="correction" data-intent-option />
+                <span class="intent-card-copy">
+                  <strong>Submit correction / updated evidence</strong>
+                  <span>Update an existing research-set entry when public materials are incomplete, outdated, or wrong.</span>
+                </span>
+              </label>
             </div>
-            <div class="form-field">
-              <label class="field-label" for="entityType">Entity type</label>
-              <input id="entityType" class="field-input" type="text" name="entityType" required />
-            </div>
-            <div class="form-field">
-              <label class="field-label" for="legalWrapperType">Documented wrapper</label>
-              <input id="legalWrapperType" class="field-input" type="text" name="legalWrapperType" required />
-            </div>
-            <div class="form-field">
-              <label class="field-label" for="jurisdiction">Jurisdiction</label>
-              <input id="jurisdiction" class="field-input" type="text" name="jurisdiction" required />
-            </div>
-            <div class="form-field">
-              <label class="field-label" for="officialWebsite">Official website</label>
-              <input id="officialWebsite" class="field-input" type="text" name="officialWebsite" inputmode="url" placeholder="example.org or https://example.org" data-field-website />
-              <p class="field-help">Optional. You can enter example.org — GDER will normalize it.</p>
-            </div>
-            <div class="form-field form-field-wide">
-              <label class="field-label" for="governance">Governance</label>
-              <textarea id="governance" class="field-textarea" name="governance" required></textarea>
-            </div>
-            <div class="form-field form-field-wide">
-              <label class="field-label" for="operatingControl">Operating control</label>
-              <textarea id="operatingControl" class="field-textarea" name="operatingControl" required></textarea>
-            </div>
-            <div class="form-field form-field-wide">
-              <label class="field-label" for="evidenceLinks">Supporting evidence / sources</label>
-              <textarea id="evidenceLinks" class="field-textarea" name="evidenceLinks" required></textarea>
-            </div>
-            <div class="form-field">
-              <label class="field-label" for="representativeName">Representative name</label>
-              <input id="representativeName" class="field-input" type="text" name="representativeName" required />
-            </div>
-            <div class="form-field">
-              <label class="field-label" for="representativeRole">Representative role</label>
-              <input id="representativeRole" class="field-input" type="text" name="representativeRole" required />
-            </div>
-            <div class="form-field form-field-wide">
-              <label class="field-label" for="officialEmail">Official email</label>
-              <input id="officialEmail" class="field-input" type="email" name="officialEmail" placeholder="name@entity-domain" required />
-            </div>
-            <div class="form-field form-field-wide">
-              <label class="field-label" for="notes">Additional notes</label>
-              <textarea id="notes" class="field-textarea" name="notes"></textarea>
-            </div>
-          </div>
+          </section>
 
-          <div class="form-actions">
-            <button class="button button-primary" type="submit">Send to GDER</button>
-            <p class="form-note">This opens an email draft to hello@gder.net with the information you entered. If your mail app does not open, email hello@gder.net directly.</p>
+          <section class="form-section">
+            <div class="form-section-head">
+              <p class="eyebrow">Step 2</p>
+              <h2>Entity and public record context.</h2>
+            </div>
+            <div class="form-grid">
+              <div class="form-field">
+                <label class="field-label" for="entityName">Entity name</label>
+                <input id="entityName" class="field-input" type="text" name="entityName" required data-field-entity-name />
+              </div>
+              <div class="form-field">
+                <label class="field-label" for="legalName">Legal name</label>
+                <input id="legalName" class="field-input" type="text" name="legalName" data-required-review="true" />
+              </div>
+              <div class="form-field">
+                <label class="field-label" for="entityType">Entity type</label>
+                <input id="entityType" class="field-input" type="text" name="entityType" data-required-review="true" />
+              </div>
+              <div class="form-field">
+                <label class="field-label" for="legalWrapperType">Documented wrapper</label>
+                <input id="legalWrapperType" class="field-input" type="text" name="legalWrapperType" data-required-review="true" />
+              </div>
+              <div class="form-field">
+                <label class="field-label" for="jurisdiction">Jurisdiction</label>
+                <input id="jurisdiction" class="field-input" type="text" name="jurisdiction" data-required-review="true" />
+              </div>
+              <div class="form-field">
+                <label class="field-label" for="officialWebsite">Official website</label>
+                <input id="officialWebsite" class="field-input" type="text" name="officialWebsite" inputmode="url" placeholder="example.org or https://example.org" data-field-website />
+                <p class="field-help">Optional. You can enter example.org and GDER will normalize it.</p>
+              </div>
+            </div>
+          </section>
+
+          <section class="form-section">
+            <div class="form-section-head">
+              <p class="eyebrow">Step 3</p>
+              <h2 data-request-scope-title>What GDER should review.</h2>
+            </div>
+            <div class="form-grid">
+              <div class="form-field form-field-wide">
+                <label class="field-label" for="requestSummary" data-request-summary-label>Review request summary</label>
+                <textarea id="requestSummary" class="field-textarea" name="requestSummary" required data-request-summary></textarea>
+                <p class="field-help" data-request-summary-help>State what you want GDER to review and why this request should move forward.</p>
+              </div>
+              <div class="form-field form-field-wide" data-review-only>
+                <label class="field-label" for="governance">Governance</label>
+                <textarea id="governance" class="field-textarea" name="governance" data-required-review="true"></textarea>
+              </div>
+              <div class="form-field form-field-wide" data-review-only>
+                <label class="field-label" for="operatingControl">Operating control</label>
+                <textarea id="operatingControl" class="field-textarea" name="operatingControl" data-required-review="true"></textarea>
+              </div>
+              <div class="form-field form-field-wide">
+                <label class="field-label" for="evidenceLinks">Evidence URLs</label>
+                <textarea id="evidenceLinks" class="field-textarea" name="evidenceLinks" required data-field-evidence></textarea>
+                <p class="field-help">Required. Enter one public URL per line. Each line is validated before the package or private case file is saved.</p>
+              </div>
+              <div class="form-field form-field-wide">
+                <label class="field-label" for="notes">Additional notes</label>
+                <textarea id="notes" class="field-textarea" name="notes"></textarea>
+              </div>
+            </div>
+          </section>
+
+          <section class="form-section">
+            <div class="form-section-head">
+              <p class="eyebrow">Step 4</p>
+              <h2>Authorized submitter details.</h2>
+            </div>
+            <div class="form-grid">
+              <div class="form-field">
+                <label class="field-label" for="representativeName">Representative name</label>
+                <input id="representativeName" class="field-input" type="text" name="representativeName" required />
+              </div>
+              <div class="form-field">
+                <label class="field-label" for="representativeRole">Representative role</label>
+                <input id="representativeRole" class="field-input" type="text" name="representativeRole" required />
+              </div>
+              <div class="form-field form-field-wide">
+                <label class="field-label" for="officialEmail">Official entity email</label>
+                <input id="officialEmail" class="field-input" type="email" name="officialEmail" placeholder="name@entity-domain" required />
+                <p class="field-help">This email must be confirmed before the intake becomes fully submitted.</p>
+              </div>
+            </div>
+          </section>
+
+          <section class="form-section" data-wallet-section>
+            <div class="form-section-head">
+              <p class="eyebrow">Step 5 · Optional</p>
+              <h2>Wallet breadcrumb proof.</h2>
+            </div>
+            <div class="form-grid">
+              <div class="form-field">
+                <label class="field-label" for="walletAddress">Claimed wallet address</label>
+                <input id="walletAddress" class="field-input" type="text" name="walletAddress" placeholder="0x…" data-wallet-address />
+              </div>
+              <div class="form-field">
+                <label class="field-label" for="walletChainId">Wallet chain</label>
+                <input id="walletChainId" class="field-input" type="text" name="walletChainId" placeholder="eip155:1" data-wallet-chain />
+              </div>
+              <div class="form-field form-field-wide">
+                <label class="field-label" for="walletTxHash">Wallet breadcrumb transaction hash</label>
+                <input id="walletTxHash" class="field-input" type="text" name="walletTxHash" placeholder="0x…" data-wallet-tx />
+              </div>
+            </div>
+            <p class="field-help">Optional. This breadcrumb only supports the claim that the applicant controls the wallet. It does not prove legal authority, governance mandate, or publication rights.</p>
+            <p class="wallet-status" data-wallet-status aria-live="polite">Optional. Create a draft first, then request a wallet breadcrumb challenge if you want to prove claimed wallet control.</p>
+            <p class="wallet-challenge" data-wallet-challenge>No challenge created yet.</p>
+            <div class="form-actions">
+              <button class="button button-secondary" type="button" data-create-wallet-challenge>Create wallet challenge</button>
+              <button class="button button-secondary" type="button" data-verify-wallet-tx>Verify wallet tx hash</button>
+            </div>
+          </section>
+
+          <div class="form-actions form-actions-split">
+            <div class="form-actions-primary">
+              <button class="button button-primary" type="submit">Validate and submit intake</button>
+              <button class="button button-secondary" type="button" data-save-draft>Save draft on this device</button>
+              <button class="button button-secondary" type="button" data-clear-draft>Clear saved draft</button>
+            </div>
+            <p class="form-note">This page keeps the local fallback. When Supabase endpoints are configured, drafts sync into a private case file and email verification gates final submission.</p>
           </div>
         </form>
       </section>
