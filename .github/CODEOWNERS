@@ -1,0 +1,9 @@
+# Default ownership
+* @oldschool-ag/maintainers
+
+# Source and generated site surfaces
+/.github/ @oldschool-ag/maintainers
+/assets/ @oldschool-ag/maintainers
+/scripts/ @oldschool-ag/maintainers
+/entities.js @oldschool-ag/maintainers
+
