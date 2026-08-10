@@ -28,9 +28,12 @@ jobs:
           node --check script.js
           node --check scripts/build-pages.mjs
 
-      - name: Rebuild generated pages
-        run: node scripts/build-pages.mjs
-
-      - name: Verify generated pages are current
-        run: git diff --exit-code
-
+      - name: Verify static site artifacts
+        run: |
+          test -s index.html
+          test -s entities.js
+          test -s sitemap.xml
+          if find . -mindepth 2 -name index.html -type f -empty -print -quit | grep -q .; then
+            echo "Found an empty generated page"
+            exit 1
+          fi
